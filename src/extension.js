@@ -11,6 +11,7 @@ const readStorageKeys = (storageKeys, callback) => {
   })
 }
 
+const FOCUS_MODE_KEY = "settings:focus_mode"
 const SETTINGS_COMMENTS_KEY = "settings:comments"
 const INFINITE_SCROLL_KEY = "settings:infinite_scroll"
 
@@ -40,17 +41,22 @@ const enableTheaterMode = () => {
 const initFY = () => {
   cleanUpFYClasses()
 
-  enableTheaterMode()
+  // see if focus mode is enabled
+  readStorageKeys([FOCUS_MODE_KEY], (config) => {
+    if(config[FOCUS_MODE_KEY]) {
+      enableTheaterMode()
 
-  if (window.location.pathname === "/") {
-    initHomePage()
-  } else if (window.location.pathname === "/results") {
-    initResultsPage()
-  } else if (window.location.pathname === "/watch") {
-    initWatchPage()
-  } else if (window.location.pathname.startsWith("/@") || window.location.pathname.startsWith("/channel")) {  // channel begins with /@ or /channel
-    initChannelPage()
-  }
+      if (window.location.pathname === "/") {
+        initHomePage()
+      } else if (window.location.pathname === "/results") {
+        initResultsPage()
+      } else if (window.location.pathname === "/watch") {
+        initWatchPage()
+      } else if (window.location.pathname.startsWith("/@") || window.location.pathname.startsWith("/channel")) {  // channel begins with /@ or /channel
+        initChannelPage()
+      }
+    }
+  })
 }
 
 const initWatchPage = () => {

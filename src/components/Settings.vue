@@ -1,6 +1,6 @@
 <script>
 import Toggle from "@components/Toggle.vue"
-import { INFINITE_SCROLL_KEY, SETTINGS_COMMENTS_KEY, writeStorageData, readStorageKey } from "@js/chrome-storage"
+import { FOCUS_MODE_KEY, INFINITE_SCROLL_KEY, SETTINGS_COMMENTS_KEY, writeStorageData, readStorageKey } from "@js/chrome-storage"
 
 export default {
   components: {
@@ -8,6 +8,8 @@ export default {
   },
   data() {
     return {
+      showFocusModeToggle: false,
+      focusModeEnabled: false,
       showCommentsToggle: false,
       commentsSectionEnabled: false,
       infiniteScrollEnabled: false,
@@ -15,6 +17,16 @@ export default {
     }
   },
   mounted() {
+    readStorageKey(FOCUS_MODE_KEY, (value) => {
+      if(typeof(value) === "undefined") {
+        this.focusModeEnabled = false
+      } else {
+        this.focusModeEnabled = value
+      }
+
+      this.showFocusModeToggle = true
+    })
+
     readStorageKey(SETTINGS_COMMENTS_KEY, (value) => {
       if(typeof(value) === "undefined") {
         this.commentsSectionEnabled = false
@@ -36,6 +48,11 @@ export default {
     })
   },
   methods: {
+    handleFocusModeToggle(val) {
+      writeStorageData(FOCUS_MODE_KEY, val, () => {
+        this.focusModeEnabled = val
+      })
+    },
     handleCommentsToggle(val) {
       writeStorageData(SETTINGS_COMMENTS_KEY, val, () => {
         this.commentsSectionEnabled = val
@@ -53,6 +70,15 @@ export default {
 <template>
   <div class="focused-youtube-settings">
     <div class="focused-youtube-settings__toggles">
+      <Toggle
+        v-if="showFocusModeToggle"
+        title="Enable Focus Mode"
+        name="Focus Mode"
+        class="focused-youtube-settings__toggle"
+        :toggled="focusModeEnabled"
+        @toggle="handleFocusModeToggle" />
+      <br/>
+      
       <Toggle
         v-if="showCommentsToggle"
         title="Show comments"
