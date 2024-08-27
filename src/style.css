@@ -6,3 +6,17 @@ body.focused-youtube-popup-page {
   font-family: Roboto, system-ui, sans-serif;
   color: #282828;
 }
+
+html.focused-youtube-embed {
+  height: auto;
+  width: auto;
+  margin: 0;
+}
+
+body.focused-youtube-embed {
+  height: auto;
+  width: auto;
+  margin: 0;
+
+  font-family: Roboto, system-ui, sans-serif;
+}

@@ -51,6 +51,8 @@ const initFY = () => {
   } else if (window.location.pathname.startsWith("/@") || window.location.pathname.startsWith("/channel")) {  // channel begins with /@ or /channel
     initChannelPage()
   }
+
+  initToggleBanner()
 }
 
 const initWatchPage = () => {
@@ -117,6 +119,14 @@ const initHomePage = () => {
   `
 
   anchor.querySelector(".fy-search-form").onsubmit = search
+}
+
+const initToggleBanner = async () => {
+  // render a vue app through an iframe
+  const frame = document.createElement("iframe")
+  frame.src = chrome.runtime.getURL("banner.html")
+
+  document.body.insertBefore(frame, document.body.firstChild)
 }
 
 const nodeMatchesSelector = (node, selector) => {
