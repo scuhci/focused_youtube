@@ -200,6 +200,10 @@ observeDOM(document.body, "ytd-shelf-renderer.style-scope.ytd-item-section-rende
 
 chrome.storage.onChanged.addListener((changes) => {
   for (let [key, { newValue }] of Object.entries(changes)) {
+    if(key === FOCUS_MODE_KEY) {
+      chrome.runtime.sendMessage({message: "reload"})
+    }
+
     if(key === SETTINGS_COMMENTS_KEY) {
       const $body = document.querySelector("body")
 

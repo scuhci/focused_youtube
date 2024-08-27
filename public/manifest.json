@@ -23,6 +23,10 @@
       "all_frames": true
     }
   ],
+  "background": {
+    "service_worker": "assets/background.js",
+    "type": "module"
+  },
   "action": {
     "default_popup": "popup.html"
   },
@@ -31,7 +35,8 @@
     "https://m.youtube.com/*"
   ],
   "permissions": [
-    "storage"
+    "storage",
+    "tabs"
   ],
   "web_accessible_resources": [
     {

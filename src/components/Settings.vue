@@ -72,7 +72,7 @@ export default {
     <div class="focused-youtube-settings__toggles">
       <Toggle
         v-if="showFocusModeToggle"
-        title="Enable Focus Mode"
+        title="Toggle Focus Mode"
         name="Focus Mode"
         class="focused-youtube-settings__toggle"
         :toggled="focusModeEnabled"
