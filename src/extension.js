@@ -125,8 +125,18 @@ const initToggleBanner = async () => {
   // render a vue app through an iframe
   const frame = document.createElement("iframe")
   frame.src = chrome.runtime.getURL("banner.html")
+  frame.style.margin = 0
+  frame.style.width = "100%" // Set body width to 100% of the viewport width
+  frame.style.height = "4rem"
+  
+
+  // Additional debug logging
+  console.log("Iframe styles:", frame.style.cssText)
 
   document.body.insertBefore(frame, document.body.firstChild)
+
+  // Further debugging to check if the iframe was inserted correctly
+  console.log("Iframe inserted:", document.body.contains(frame))
 }
 
 const nodeMatchesSelector = (node, selector) => {

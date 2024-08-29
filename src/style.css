@@ -1,3 +1,6 @@
+body {
+  margin: 0;
+}
 body.focused-youtube-popup-page {
   width: 300px;
 
@@ -20,3 +23,9 @@ body.focused-youtube-embed {
 
   font-family: Roboto, system-ui, sans-serif;
 }
+
+body.focused-youtube-banner {
+  
+}
+
+
