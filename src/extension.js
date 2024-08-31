@@ -81,6 +81,11 @@ const initResultsPage = () => {
       $body.classList.remove("fy-results-page--infinite-scroll-enabled")
     }
   })
+
+  const pageManager = document.querySelector("ytd-page-manager")
+  if (pageManager) {
+    pageManager.style.paddingTop = "4rem"
+  }
 }
 
 const initChannelPage = () => {
@@ -123,21 +128,51 @@ const initHomePage = () => {
 
 const initToggleBanner = async () => {
   // render a vue app through an iframe
+  if (document.querySelector("#fy-banner")){
+    document.querySelector("#fy-banner").remove()
+    console.log("The banner is already there, removing")
+    return
+  }
+  else{
+    console.log("No existing banner found, adding new banner")
+  }
+
   const frame = document.createElement("iframe")
   frame.src = chrome.runtime.getURL("banner.html")
-  frame.style.margin = 0
+  frame.id = "fy-banner"
   frame.style.width = "100%" // Set body width to 100% of the viewport width
   frame.style.height = "4rem"
-  
+  //frame.style.top = "0"
 
   // Additional debug logging
   console.log("Iframe styles:", frame.style.cssText)
 
-  document.body.insertBefore(frame, document.body.firstChild)
+  
+  const insertBanner = () => {
+    const searchBar = document.querySelector("ytd-masthead")
+    if (searchBar) {
+      searchBar.insertAdjacentElement("beforebegin", frame)
+      console.log("Searchbar found, inserting frame")
+    } else {
+      console.log("Searchbar not found, inserting banner at top of the body")
+      document.body.insertBefore(frame, document.body.firstChild)
+    }
+  }
 
-  // Further debugging to check if the iframe was inserted correctly
+  insertBanner()
+
+  const observer = new MutationObserver(() => {
+    if (!document.querySelector("#fy-banner")) {
+      insertBanner()
+    }
+  })
+
+  observer.observe(document.body, { childList: true, subtree: true })
+
   console.log("Iframe inserted:", document.body.contains(frame))
 }
+  
+
 
 const nodeMatchesSelector = (node, selector) => {
   if (!node) return false
