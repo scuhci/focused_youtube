@@ -11,6 +11,7 @@ const readStorageKeys = (storageKeys, callback) => {
   })
 }
 
+const FOCUS_MODE_KEY = "settings:focus_mode"
 const SETTINGS_COMMENTS_KEY = "settings:comments"
 const INFINITE_SCROLL_KEY = "settings:infinite_scroll"
 
@@ -40,7 +41,10 @@ const enableTheaterMode = () => {
 const initFY = () => {
   cleanUpFYClasses()
 
-  enableTheaterMode()
+  // see if focus mode is enabled
+  readStorageKeys([FOCUS_MODE_KEY], (config) => {
+    if(config[FOCUS_MODE_KEY]) {
+      enableTheaterMode()
 
   if (window.location.pathname === "/") {
     initHomePage()
@@ -53,7 +57,7 @@ const initFY = () => {
   }
 
   initToggleBanner()
-}
+}})}
 
 const initWatchPage = () => {
   document.body.classList.add("fy-watch-page")
@@ -249,6 +253,10 @@ observeDOM(document.body, "ytd-shelf-renderer.style-scope.ytd-item-section-rende
 
 chrome.storage.onChanged.addListener((changes) => {
   for (let [key, { newValue }] of Object.entries(changes)) {
+    if(key === FOCUS_MODE_KEY) {
+      chrome.runtime.sendMessage({message: "reload"})
+    }
+
     if(key === SETTINGS_COMMENTS_KEY) {
       const $body = document.querySelector("body")
 

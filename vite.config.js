@@ -20,7 +20,8 @@ export default defineConfig({
       input: {
         popup: "src/popup.js",
         extension: "src/extension.js",
-        banner: "src/banner.js"
+        banner: "src/banner.js",
+        background: "src/background.js"
       },
       output: {
         entryFileNames: "assets/[name].js",

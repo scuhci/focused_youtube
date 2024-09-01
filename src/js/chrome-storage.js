@@ -3,6 +3,7 @@
 // with an import statement fails with It fails with "Can't use import
 // statement outside a module".
 
+export const FOCUS_MODE_KEY = "settings:focus_mode"
 export const SETTINGS_COMMENTS_KEY = "settings:comments"
 export const INFINITE_SCROLL_KEY = "settings:infinite_scroll"
 
